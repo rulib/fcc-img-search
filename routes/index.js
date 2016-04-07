@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
+var imgur = require('../private/secret.js');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -13,6 +15,7 @@ router.get('/api/imagesearch/:search', function(req, res, next) {
   //middleware to serve up images n*10 thru (n+1)*10
   console.log("Logging params: " + req.params.search);
   console.log("Logging query offset: " + req.query.offset);
+  console.log("Logging client ID: "+imgur.clientId);
   res.render('index', { title: 'Express' });
   
 });
