@@ -1,27 +1,36 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+
+var mongo = require('mongodb').MongoClient;
+var mongoUrl = 'mongodb://localhost:27017/searches';
 
 var routes = require('./routes/index');
 
-
 var app = express();
+var database = {};
+
+
+mongo.connect(mongoUrl, function(err,db) {
+    if(err) {
+        throw new Error('Database failed to connect!');
+    } else {
+      database = db;
+        console.log('MongoDB successfully connected.');
+    }});
+    
+var dbExpose = function(req,res,next){
+  req.db = database;
+  next();
+};    
+    
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(dbExpose);
 app.use('/', routes);
 
 
@@ -56,7 +65,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+
 app.listen(8080);
 
 
 module.exports = app;
+
