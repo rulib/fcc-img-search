@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 FCC Image Search Abstraction Layer Project
+  p 
+    |This project uses the Imgur API to provide a simplified image search.<br><br>
+    |To search for a phrase, use the route below.  The first page is at page number 0.<br>
+    |https://fcc-img-search-rulib.c9users.io/api/imagesearch/[search]?offset=[page number]<br>
+    |Example:  
+    a(href = "https://fcc-img-search-rulib.c9users.io/api/imagesearch/cat?offset=2") https://fcc-img-search-rulib.c9users.io/api/imagesearch/cat?offset=2<br><br>
+    |To view recent searches, use the route below.  These searches expire after one hour.<br>
+    a(href = "https://fcc-img-search-rulib.c9users.io/api/recent") https://fcc-img-search-rulib.c9users.io/api/recent<br><br>
+    a(href = "https://fcc-img-search-rulib.c9users.io/gui") Experimental GUI

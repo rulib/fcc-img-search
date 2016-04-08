@@ -12,10 +12,12 @@ var database = {};
 
 mongo.connect(mongoUrl, function(err,db) {
     if(err) {
-        throw new Error('Database failed to connect!');
+        throw new Error('Database error! Failure to connect!');
     } else {
       database = db;
-        console.log('MongoDB successfully connected.');
+        console.log('MongoDB connected - app online.');
+        db.collection("searches").createIndex( { "time": 1 }, { expireAfterSeconds: 3600 } );
+        app.listen(8080);
     }});
     
 var dbExpose = function(req,res,next){
@@ -67,7 +69,7 @@ app.use(function(err, req, res, next) {
 
 
 
-app.listen(8080);
+
 
 
 module.exports = app;
