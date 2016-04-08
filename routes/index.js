@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var imgur = require('../private/secret.js');
+var imgSearch = require('../my_node_modules/imgSearch.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -9,7 +10,9 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/api/imagesearch/:search', function(req, res, next) {
+router.get('/api/imagesearch/:search'
+  ,imgSearch.imgLoad
+  , function(req, res, next) {
   //middleware to log :search to mongodb
   //middleware to load images from API using 'request'
   //middleware to serve up images n*10 thru (n+1)*10
